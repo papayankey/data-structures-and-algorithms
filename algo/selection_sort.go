@@ -23,7 +23,6 @@ func SelectionSort(s []int, asc bool) []int {
 					k = j
 				}
 			}
-
 		}
 		swap(s, i, k)
 	}

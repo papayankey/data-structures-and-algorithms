@@ -22,7 +22,6 @@ func BubbleSort(s []int, asc bool) []int {
 					swap(s, j, j+1)
 				}
 			}
-
 		}
 	}
 	return s
