@@ -20,7 +20,7 @@ implementation and / or operations shall be covered;
 - Queue
     - Array Queue
     - Linked List Queue
-    - Circule Queue
+    - Circular Queue
     - Priority Queue
     - Double Ended Queue (Deque)
 - Hash Table
