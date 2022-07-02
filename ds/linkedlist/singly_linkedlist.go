@@ -53,12 +53,12 @@ func (l *linkedlist) AddLast(val string) bool {
 }
 
 // AddBefore adds node before another node in the list
-func (l *linkedlist) AddBefore(before, val string) bool {
+func (l *linkedlist) AddBefore(before *node, val string) bool {
 	if l.First == nil {
 		return false
 	}
 
-	if l.First.Data == before {
+	if l.First == before {
 		return l.AddFirst(val)
 	}
 
@@ -75,30 +75,30 @@ func (l *linkedlist) AddBefore(before, val string) bool {
 	return true
 }
 
-func (l *linkedlist) AddAfter(after, val string) bool {
+func (l *linkedlist) AddAfter(after *node, val string) bool {
 	if l.First == nil {
 		return false
 	}
 
 	n := &node{val, nil}
 
-	if l.First.Data == after {
+	if l.First == after {
 		n.Next = l.First.Next
 		l.First.Next = n
 		l.Size++
 		return true
 	}
 
-	if l.Last.Data == after {
+	if l.Last == after {
 		return l.AddLast(val)
 	}
 
 	t := l.First.Next
-	for t != nil && t.Data != after {
+	for t != nil && t != after {
 		t = t.Next
 	}
 
-	if t != nil && t.Data == after {
+	if t != nil && t == after {
 		n.Next = t.Next
 		t.Next = n
 		l.Size++
@@ -109,16 +109,16 @@ func (l *linkedlist) AddAfter(after, val string) bool {
 }
 
 // findPrevious returns preceeding node before given value
-func (l *linkedlist) findPrev(val string) (*node, bool) {
+func (l *linkedlist) findPrev(e *node) (*node, bool) {
 	var p *node
 	n := l.First
 
-	for n != nil && n.Data != val {
+	for n != nil && n != e {
 		p = n
 		n = n.Next
 	}
 
-	if p != nil && p.Next != nil && p.Next.Data == val {
+	if p != nil && p.Next != nil && p.Next == e {
 		return p, true
 	}
 
