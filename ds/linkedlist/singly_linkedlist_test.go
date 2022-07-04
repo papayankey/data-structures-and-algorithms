@@ -1,139 +1,204 @@
 package ds
 
 import (
-	"reflect"
 	"testing"
 )
 
 func TestAddFirst(t *testing.T) {
-	l := NewLinkedList()
-	f, o := "Pawpaw", "Orange"
+	l := NewList()
+	l.AddFirst("pawpaw")
 
-	l.Add(o)
-	l.AddFirst(f)
+	got := l.Head.Data
+	want := "pawpaw"
 
-	got := l.First
-	want := &node{f, &node{o, nil}}
+	if got != want {
+		t.Errorf("AddAtFirst(%v) = %v; want %v", "pawpaw", got, want)
+	}
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("AddAtFirst(%v) = %v; want %v", f, got, want)
+	l.AddFirst("mango")
+
+	got = l.Head.Data
+	want = "mango"
+
+	if got != want {
+		t.Errorf("AddAtFirst(%v) = %v; want %v", "mango", got, want)
 	}
 }
 
 func TestAddLast(t *testing.T) {
-	l := NewLinkedList()
-	f, g := "Pineapple", "Guava"
+	l := NewList()
 
-	l.Add(f)
-	l.AddLast(g)
+	l.AddLast("pineapple")
 
-	got := l.Last
-	want := &node{g, nil}
+	got := l.Tail.Data
+	want := "pineapple"
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("AddAtLast(%v) = %v; want %v", f, got, want)
+	if got != want {
+		t.Errorf("AddAtLast(%v) = %v; want %v", "pineapple", got, want)
+	}
+
+	l.AddLast("blackberry")
+
+	got = l.Tail.Data
+	want = "blackberry"
+
+	if got != want {
+		t.Errorf("AddAtLast(%v) = %v; want %v", "blackberry", got, want)
 	}
 }
 
 func TestAddBefore(t *testing.T) {
-	t.Run("given that list is empty Returns false", func(t *testing.T) {
-		l := NewLinkedList()
+	l := NewList()
 
-		b, v := "Pineapple", "Guava"
-		got := l.AddBefore(b, v)
-		want := false
+	// when before is nil
 
-		if got != want {
-			t.Errorf("AddBefore(%v, %v) = %v; want %v", b, v, got, want)
-		}
-	})
+	l.Add("orange")
+	l.AddBefore(nil, "pear")
 
-	t.Run("given that before does not exist Returns false", func(t *testing.T) {
-		l := NewLinkedList()
-		l.Add("Pear")
+	got := l.Head.Data
+	want := "orange"
 
-		b, v := "Pineapple", "Guava"
-		got := l.AddBefore(b, v)
-		want := false
+	if got != want {
+		t.Errorf("AddBefore(%v, %v) = %v; want %v", nil, "blackberry", got, want)
+	}
 
-		if got != want {
-			t.Errorf("AddBefore(%v, %v) = %v; want %v", b, v, got, want)
-		}
-	})
+	// when before is not nil but does not exist
 
-	t.Run("given that before exists New node is inserted before given node", func(t *testing.T) {
-		l := NewLinkedList()
-		b, v := "Tangerine", "Apple"
+	l.AddBefore(&Node{Data: "avocado"}, "pear")
 
-		l.Add(b)
-		l.Add("Watermelon")
-		l.AddBefore(b, v)
+	got = l.Head.Data
+	want = "orange"
 
-		got := l.First.Next
-		want := &node{v, &node{b, nil}}
+	if got != want {
+		t.Errorf("AddBefore(%v, %v) = %v; want %v", "avocado", "orange", got, want)
+	}
 
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("AddBefore(%v, %v) = %v; want %v", b, v, got, want)
-		}
-	})
+	// when before exists and is the head
 
-	t.Run("given that before node is the first New node is inserted at first", func(t *testing.T) {
-		l := NewLinkedList()
-		b, v := "Pineapple", "Guava"
+	l.Add("avocado")
+	l.AddBefore(&Node{Data: "avocado"}, "pear")
 
-		l.Add(b)
-		l.AddBefore(b, v)
+	got = l.Head.Data
+	want = "pear"
 
-		got := l.First
-		want := &node{v, &node{b, nil}}
+	if got != want {
+		t.Errorf("AddBefore(%v, %v) = %v; want %v", "avocado", "pear", got, want)
+	}
 
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("AddBefore(%v, %v) = %v; want %v", b, v, got, want)
-		}
-	})
+	// when before exists and not the head
+
+	l.AddBefore(&Node{Data: "orange"}, "mango")
+
+	got = l.Head.Next.Next.Data
+	want = "mango"
+
+	if got != want {
+		t.Errorf("AddBefore(%v, %v) = %v; want %v", "orange", "mango", got, want)
+	}
 }
 
-func TestAddAfter(t *testing.T) {
-	t.Run("given that list is empty Returns false", func(t *testing.T) {
-		l := NewLinkedList()
+func TestRemoveFirst(t *testing.T) {
+	l := NewList()
 
-		a, v := "Bitter Gourd", "Mango"
-		got := l.AddAfter(a, v)
-		want := false
+	// when list is empty
 
-		if got != want {
-			t.Errorf("AddAfter(%v, %v) = %v; want %v", a, v, got, want)
-		}
-	})
+	got := l.RemoveFirst()
+	want := ""
 
-	t.Run("given that after is the first New node is inserted after first", func(t *testing.T) {
-		l := NewLinkedList()
-		l.Add("Bitter Gourd")
+	if got != want {
+		t.Errorf("RemoveFirst() = %v; want %v", got, want)
+	}
 
-		a, v := "Bitter Gourd", "Mango"
-		l.AddAfter(a, v)
+	// when list contains at least 1 node
 
-		got := l.First.Next
-		want := &node{v, nil}
+	l.Add("lime")
+	l.Add("melon")
 
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("AddAfter(%v, %v) = %v; want %v", a, v, got, want)
-		}
-	})
+	got = l.RemoveFirst()
+	want = "melon"
 
-	t.Run("given that after is the last New node is inserted at last", func(t *testing.T) {
-		l := NewLinkedList()
-		l.Add("Sweet Apple")
-		l.Add("Bitter Gourd")
+	if got != want {
+		t.Errorf("RemoveFirst() = %v; want %v", got, want)
+	}
+}
 
-		a, v := "Sweet Apple", "Mango"
-		l.AddAfter(a, v)
+func TestGet(t *testing.T) {
+	l := NewList()
 
-		got := l.Last
-		want := &node{v, nil}
+	l.Add("starfruit")
+	l.Add("strawberry")
+	l.Add("kiwi")
 
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("AddAfter(%v, %v) = %v; want %v", a, v, got, want)
-		}
-	})
+	// when index is the head
+
+	got := l.GetAt(0)
+	want := "kiwi"
+
+	if got != want {
+		t.Errorf("Get(%v) = %v; want %v", 0, got, want)
+	}
+
+	// when index is less than zero
+
+	got = l.GetAt(-1)
+	want = ""
+
+	if got != want {
+		t.Errorf("Get(%v) = %v; want %v", -1, got, want)
+	}
+
+	// when index is greater than list size
+
+	got = l.GetAt(4)
+	want = ""
+
+	if got != want {
+		t.Errorf("Get(%v) = %v; want %v", 4, got, want)
+	}
+
+	// when index is within range of list size
+
+	got = l.GetAt(3)
+	want = "starfruit"
+
+	if got != want {
+		t.Errorf("Get(%v) = %v; want %v", 3, got, want)
+	}
+}
+
+func TestRemoveLast(t *testing.T) {
+	l := NewList()
+
+	// when	list is empty
+
+	got := l.RemoveLast()
+	want := ""
+
+	if got != want {
+		t.Errorf("RemoveLast() = %v; want %v", got, want)
+	}
+
+	// when list has 1 node
+
+	l.Add("tangerine")
+
+	got = l.RemoveLast()
+	want = "tangerine"
+
+	if got != want {
+		t.Errorf("RemoveLast() = %v; want %v", got, want)
+	}
+
+	// when list has more than 1 node
+
+	l.Add("peach")
+	l.Add("sweet apple")
+	l.Add("orange")
+
+	got = l.RemoveLast()
+	want = "peach"
+
+	if got != want {
+		t.Errorf("RemoveLast() = %v; want %v", got, want)
+	}
 }
