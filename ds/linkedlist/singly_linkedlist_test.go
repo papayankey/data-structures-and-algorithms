@@ -5,7 +5,7 @@ import (
 )
 
 func TestAddFirst(t *testing.T) {
-	l := NewList()
+	l := NewList[string]()
 	l.AddFirst("pawpaw")
 
 	got := l.Head.Data
@@ -26,7 +26,7 @@ func TestAddFirst(t *testing.T) {
 }
 
 func TestAddLast(t *testing.T) {
-	l := NewList()
+	l := NewList[string]()
 
 	l.AddLast("pineapple")
 
@@ -48,7 +48,7 @@ func TestAddLast(t *testing.T) {
 }
 
 func TestAddBefore(t *testing.T) {
-	l := NewList()
+	l := NewList[string]()
 
 	// when before is nil
 
@@ -64,7 +64,7 @@ func TestAddBefore(t *testing.T) {
 
 	// when before is not nil but does not exist
 
-	l.AddBefore(&Node{Data: "avocado"}, "pear")
+	l.AddBefore(&Node[string]{Data: "avocado"}, "pear")
 
 	got = l.Head.Data
 	want = "orange"
@@ -76,7 +76,7 @@ func TestAddBefore(t *testing.T) {
 	// when before exists and is the head
 
 	l.Add("avocado")
-	l.AddBefore(&Node{Data: "avocado"}, "pear")
+	l.AddBefore(&Node[string]{Data: "avocado"}, "pear")
 
 	got = l.Head.Data
 	want = "pear"
@@ -87,7 +87,7 @@ func TestAddBefore(t *testing.T) {
 
 	// when before exists and not the head
 
-	l.AddBefore(&Node{Data: "orange"}, "mango")
+	l.AddBefore(&Node[string]{Data: "orange"}, "mango")
 
 	got = l.Head.Next.Next.Data
 	want = "mango"
@@ -98,7 +98,7 @@ func TestAddBefore(t *testing.T) {
 }
 
 func TestRemoveFirst(t *testing.T) {
-	l := NewList()
+	l := NewList[string]()
 
 	// when list is empty
 
@@ -123,7 +123,7 @@ func TestRemoveFirst(t *testing.T) {
 }
 
 func TestGet(t *testing.T) {
-	l := NewList()
+	l := NewList[string]()
 
 	l.Add("starfruit")
 	l.Add("strawberry")
@@ -167,7 +167,7 @@ func TestGet(t *testing.T) {
 }
 
 func TestRemoveLast(t *testing.T) {
-	l := NewList()
+	l := NewList[string]()
 
 	// when	list is empty
 

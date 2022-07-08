@@ -1,42 +1,42 @@
 package ds
 
 // node represents an element of the linked list.
-type Node struct {
-	Data string
-	Next *Node
+type Node[E comparable] struct {
+	Data E
+	Next *Node[E]
 }
 
 // linkedlist represents collection of nodes
-type Linkedlist struct {
-	Head *Node
-	Tail *Node
+type Linkedlist[E comparable] struct {
+	Head *Node[E]
+	Tail *Node[E]
 	Len  int
 }
 
-func (l *Linkedlist) String() string {
-	out := ""
-	curr := l.Head
-	for i := 0; i < l.Len; i++ {
-		out += curr.Data + " -> "
-		curr = curr.Next
-	}
-	out += "nil"
-	return out
-}
+// func (l *Linkedlist[E]) String() string {
+// 	out := ""
+// 	curr := l.Head
+// 	for i := 0; i < l.Len; i++ {
+// 		out += curr.Data + " -> "
+// 		curr = curr.Next
+// 	}
+// 	out += "nil"
+// 	return out
+// }
 
 // NewLinkedList constructs an empty linked list
-func NewList() *Linkedlist {
-	return new(Linkedlist)
+func NewList[E comparable]() *Linkedlist[E] {
+	return new(Linkedlist[E])
 }
 
 // Add inserts node at the beginning of the list
-func (l *Linkedlist) Add(v string) {
+func (l *Linkedlist[E]) Add(v E) {
 	l.AddFirst(v)
 }
 
 // addFirst inserts node at the beginning of list
-func (l *Linkedlist) AddFirst(v string) {
-	n := &Node{Data: v}
+func (l *Linkedlist[E]) AddFirst(v E) {
+	n := &Node[E]{Data: v}
 	if l.Head == nil {
 		l.Tail = n
 	} else {
@@ -47,11 +47,11 @@ func (l *Linkedlist) AddFirst(v string) {
 }
 
 // AddLast adds node at the end of list
-func (l *Linkedlist) AddLast(v string) {
+func (l *Linkedlist[E]) AddLast(v E) {
 	if l.Head == nil {
 		l.AddFirst(v)
 	} else {
-		n := &Node{Data: v}
+		n := &Node[E]{Data: v}
 		l.Tail.Next = n
 		l.Tail = n
 		l.Len++
@@ -61,7 +61,7 @@ func (l *Linkedlist) AddLast(v string) {
 // AddBefore inserts node before specified node in list.
 // before node must not be nil.
 // List is not modified if before is nil or does not exist.
-func (l *Linkedlist) AddBefore(bf *Node, v string) {
+func (l *Linkedlist[E]) AddBefore(bf *Node[E], v E) {
 	if bf == nil {
 		return
 	}
@@ -74,7 +74,7 @@ func (l *Linkedlist) AddBefore(bf *Node, v string) {
 	if l.Contains(bf) {
 		p := l.findPrev(bf)
 		if p != nil {
-			n := &Node{Data: v}
+			n := &Node[E]{Data: v}
 			n.Next = p.Next
 			p.Next = n
 			l.Len++
@@ -83,14 +83,14 @@ func (l *Linkedlist) AddBefore(bf *Node, v string) {
 }
 
 // AddAfter inserts node after specified node in list
-func (l *Linkedlist) AddAfter(af *Node, v string) {
-	panic("To be implemented")
+func (l *Linkedlist[E]) AddAfter(af *Node[E], v E) {
+	panic("to be implemented")
 }
 
 // RemoveFirst deletes node from head of list
-func (l *Linkedlist) RemoveFirst() (out string) {
+func (l *Linkedlist[E]) RemoveFirst() (out E) {
 	if l.Head == nil {
-		return ""
+		return out
 	}
 	out = l.Head.Data
 	l.Head = l.Head.Next
@@ -99,42 +99,43 @@ func (l *Linkedlist) RemoveFirst() (out string) {
 }
 
 // RemoveLast deletes node from end of list
-func (l *Linkedlist) RemoveLast() string {
+func (l *Linkedlist[E]) RemoveLast() (out E) {
 	if l.Head == nil {
-		return ""
+		return out
 	}
 
-	var prev *Node
+	var prev *Node[E]
 	curr := l.Head
 	for curr.Next != nil {
 		prev = curr
 		curr = curr.Next
 	}
 
-	var out *Node
+	var n *Node[E]
 	if prev == nil {
-		out = l.Head
+		n = l.Head
 		l.Head = nil
 		l.Tail = nil
 	} else {
-		out = prev.Next
+		n = prev.Next
 		prev.Next = prev.Next.Next
 		l.Tail = prev
 	}
 
 	l.Len--
-	return out.Data
+	out = n.Data
+	return
 }
 
 // RemoveAt deletes a node at specified index
-func (l *Linkedlist) RemoveAt(index int) string {
-	panic("To be implemented")
+func (l *Linkedlist[E]) RemoveAt(index int) E {
+	panic("Eo be implemented")
 }
 
 // GetAt retrieves and returns node at specified index
-func (l *Linkedlist) GetAt(index int) string {
+func (l *Linkedlist[E]) GetAt(index int) (out E) {
 	if index < 0 || index > l.Len {
-		return ""
+		return out
 	}
 
 	curr := l.Head
@@ -142,11 +143,12 @@ func (l *Linkedlist) GetAt(index int) string {
 		curr = curr.Next
 	}
 
-	return curr.Data
+	out = curr.Data
+	return
 }
 
 // Contains checks if node exists in list
-func (l *Linkedlist) Contains(n *Node) bool {
+func (l *Linkedlist[E]) Contains(n *Node[E]) bool {
 	curr := l.Head
 	for curr != nil {
 		if curr.Data == n.Data {
@@ -158,8 +160,8 @@ func (l *Linkedlist) Contains(n *Node) bool {
 }
 
 // findPrev returns node which preceeds specified node
-func (l *Linkedlist) findPrev(n *Node) *Node {
-	var prev *Node
+func (l *Linkedlist[E]) findPrev(n *Node[E]) *Node[E] {
+	var prev *Node[E]
 	curr := l.Head
 	for curr != nil && curr.Data != n.Data {
 		prev = curr
