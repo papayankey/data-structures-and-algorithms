@@ -122,7 +122,7 @@ func TestRemoveFirst(t *testing.T) {
 	}
 }
 
-func TestGet(t *testing.T) {
+func TestGetAt(t *testing.T) {
 	l := NewList[string]()
 
 	l.Add("starfruit")
@@ -200,5 +200,56 @@ func TestRemoveLast(t *testing.T) {
 
 	if got != want {
 		t.Errorf("RemoveLast() = %v; want %v", got, want)
+	}
+}
+
+func TestRemoveAt(t *testing.T) {
+	l := NewList[string]()
+
+	// when list is empty
+
+	got := l.RemoveAt(1)
+	want := ""
+
+	if got != want {
+		t.Errorf("RemoveAt() = %v; want %v", got, want)
+	}
+
+	// when index is the head
+
+	l.Add("grapes")
+
+	got = l.RemoveAt(1)
+	want = "grapes"
+
+	if got != want {
+		t.Errorf("RemoveAt() = %v; want %v", got, want)
+	}
+
+	// when index is the tail
+
+	l.Add("watermelon")
+	l.Add("strawberry")
+	l.Add("passion fruit")
+
+	got = l.RemoveAt(3)
+	want = "watermelon"
+
+	if got != want {
+		t.Errorf("RemoveAt() = %v; want %v", got, want)
+	}
+
+	// when index is neither head or tail
+
+	l.Add("watermelon")
+	l.Add("strawberry")
+	l.Add("passion fruit")
+	l.Add("avocado")
+
+	got = l.RemoveAt(3)
+	want = "strawberry"
+
+	if got != want {
+		t.Errorf("RemoveAt() = %v; want %v", got, want)
 	}
 }

@@ -84,7 +84,30 @@ func (l *Linkedlist[E]) AddBefore(bf *Node[E], v E) {
 
 // AddAfter inserts node after specified node in list
 func (l *Linkedlist[E]) AddAfter(af *Node[E], v E) {
-	panic("to be implemented")
+	if af == nil {
+		return
+	}
+
+	n := &Node[E]{Data: v}
+
+	if l.Head == af {
+		n.Next = l.Head.Next
+		l.Head.Next = n
+	} else if l.Tail == af {
+		l.Tail.Next = n
+		l.Tail = n
+	} else {
+		if l.Contains(af) {
+			curr := l.Head
+			for curr != af {
+				curr = curr.Next
+			}
+			n.Next = curr.Next
+			curr.Next = n
+		}
+	}
+
+	l.Len++
 }
 
 // RemoveFirst deletes node from head of list
@@ -128,8 +151,33 @@ func (l *Linkedlist[E]) RemoveLast() (out E) {
 }
 
 // RemoveAt deletes a node at specified index
-func (l *Linkedlist[E]) RemoveAt(index int) E {
-	panic("Eo be implemented")
+func (l *Linkedlist[E]) RemoveAt(index int) (out E) {
+	if l.Head == nil || index < 0 || index > l.Len {
+		return out
+	}
+
+	var prev *Node[E]
+	curr := l.Head
+
+	for i := 0; i < index-1; i++ {
+		prev = curr
+		curr = curr.Next
+	}
+
+	if prev == nil {
+		l.Head = curr.Next
+	} else {
+		prev.Next = curr.Next
+	}
+
+	if curr == l.Tail {
+		l.Tail = prev
+	}
+
+	out = curr.Data
+	l.Len--
+
+	return
 }
 
 // GetAt retrieves and returns node at specified index
