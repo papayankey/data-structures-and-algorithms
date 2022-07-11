@@ -253,3 +253,60 @@ func TestRemoveAt(t *testing.T) {
 		t.Errorf("RemoveAt() = %v; want %v", got, want)
 	}
 }
+
+func TestAddAfter(t *testing.T) {
+	l := NewList[string]()
+
+	// when specified node is the tail
+
+	l.Add("manchester united")
+	l.Add("real madrid")
+
+	af := &Node[string]{Data: "manchester united"}
+	l.AddAfter(af, "chelsea")
+
+	got := l.Head.Next.Next.Data
+	want := "chelsea"
+
+	if got != want {
+		t.Errorf("AddAfter(%v, %v); got %v want %v", af, "chelsea", got, want)
+	}
+
+	// when specified node is the head
+
+	af = &Node[string]{Data: "real madrid"}
+	l.AddAfter(af, "ajax")
+
+	got = l.Head.Next.Data
+	want = "ajax"
+
+	if got != want {
+		t.Errorf("AddAfter(%v, %v); got %v want %v", af, "ajax", got, want)
+	}
+
+	// when specified node is not the head or tail
+
+	af = &Node[string]{Data: "ajax"}
+	l.AddAfter(af, "liverpool")
+
+	got = l.Head.Next.Next.Data
+	want = "liverpool"
+
+	if got != want {
+		t.Errorf("AddAfter(%v, %v); got %v want %v", af, "liverpool", got, want)
+	}
+
+	// when list is empty
+
+	l = NewList[string]()
+
+	af = &Node[string]{Data: "bayern munich"}
+	l.AddAfter(af, "barcelona")
+
+	var actual *Node[string] = l.Head
+	var expected *Node[string] = nil
+
+	if actual != expected {
+		t.Errorf("AddAfter(%v, %v); got %v want %v", af, "barcelona", actual, expected)
+	}
+}

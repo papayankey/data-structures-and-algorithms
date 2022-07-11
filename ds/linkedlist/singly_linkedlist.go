@@ -84,22 +84,22 @@ func (l *Linkedlist[E]) AddBefore(bf *Node[E], v E) {
 
 // AddAfter inserts node after specified node in list
 func (l *Linkedlist[E]) AddAfter(af *Node[E], v E) {
-	if af == nil {
+	if af == nil || l.Head == nil {
 		return
 	}
 
 	n := &Node[E]{Data: v}
 
-	if l.Head == af {
+	if l.Head.Data == af.Data {
 		n.Next = l.Head.Next
 		l.Head.Next = n
-	} else if l.Tail == af {
+	} else if l.Tail.Data == af.Data {
 		l.Tail.Next = n
 		l.Tail = n
 	} else {
 		if l.Contains(af) {
 			curr := l.Head
-			for curr != af {
+			for curr.Data != af.Data {
 				curr = curr.Next
 			}
 			n.Next = curr.Next
