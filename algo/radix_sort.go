@@ -6,9 +6,8 @@ package algo
 func RadixSort(s []int, radix int) []int {
 	max := GetMax(s, len(s))
 	bins := make([]*Node, radix)
-	divisor := 1
 
-	for divisor < max {
+	for divisor := 1; divisor < max; divisor *= radix {
 		for i := 0; i < len(s); i++ {
 			loc := (s[i] / divisor) % radix
 			insertToBucket(bins, s[i], loc)
@@ -20,8 +19,6 @@ func RadixSort(s []int, radix int) []int {
 				j++
 			}
 		}
-
-		divisor *= radix
 	}
 
 	return s
