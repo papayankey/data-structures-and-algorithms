@@ -12,7 +12,7 @@ func CountSort(s []int, n int) []int {
 		for count[j] != 0 {
 			s[k] = j
 			count[j] -= 1
-			k++
+			k += 1
 		}
 	}
 
