@@ -24,11 +24,22 @@ func (s *Stack) Push(items ...int) {
 
 // Pop removes an element from stack
 func (s *Stack) Pop() int {
-	panic("To be implemented")
+	v := s.Data[s.Size-1]
+	s.Data = s.Data[:s.Size-1]
+	s.Size -= 1
+
+	return *v
 }
 
 // Peek returns element at the top of stack,
 // but does not remove elemtn from stack.
 func (s *Stack) Peek() int {
 	panic("To be implemented")
+}
+
+// Clear removes all element from stack
+// The size is also reset to zero
+func (s *Stack) Clear() {
+	s.Data = s.Data[:0]
+	s.Size = 0
 }
