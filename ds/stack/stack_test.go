@@ -50,4 +50,25 @@ func TestStack(t *testing.T) {
 		}
 	})
 
+	t.Run("peek element at the top of stac", func(t *testing.T) {
+		defer s.Clear() // clean up stack
+
+		s.Push(65)
+		s.Push(14)
+
+		got := s.Peek()
+		want := 14
+
+		if got != want {
+			t.Errorf("Pop() = %v, want % v", got, want)
+		}
+
+		got = s.Size
+		want = 2
+
+		if got != want {
+			t.Errorf("Pop() = %v, want % v", got, want)
+		}
+	})
+
 }

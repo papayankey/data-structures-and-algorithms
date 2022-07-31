@@ -34,7 +34,7 @@ func (s *Stack) Pop() int {
 // Peek returns element at the top of stack,
 // but does not remove elemtn from stack.
 func (s *Stack) Peek() int {
-	panic("To be implemented")
+	return *s.Data[s.Size-1]
 }
 
 // Clear removes all element from stack
