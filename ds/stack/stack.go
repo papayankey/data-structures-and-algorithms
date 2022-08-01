@@ -50,3 +50,13 @@ func (s *Stack) Swap() {
 	s.Push(i)
 	s.Push(j)
 }
+
+// RotateRight rotates n items on the stack
+// to the right.
+func (s *Stack) RotateRight(n int) {
+	for i := 1; i < n; i++ {
+		c := s.Size - i
+		p := s.Size - i - 1
+		s.Data[c], s.Data[p] = s.Data[p], s.Data[c]
+	}
+}
