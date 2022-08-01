@@ -43,3 +43,10 @@ func (s *Stack) Clear() {
 	s.Data = s.Data[:0]
 	s.Size = 0
 }
+
+// Swap exchanges first two items on stack
+func (s *Stack) Swap() {
+	i, j := s.Pop(), s.Pop()
+	s.Push(i)
+	s.Push(j)
+}

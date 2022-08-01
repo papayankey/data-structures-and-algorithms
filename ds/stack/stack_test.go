@@ -15,7 +15,7 @@ func TestStack(t *testing.T) {
 		want := 1
 
 		if got != want {
-			t.Errorf("Push(%v), size %v want % v", 3, got, want)
+			t.Errorf("Push(%v), size %v want %v", 3, got, want)
 		}
 
 		// push multiple elements
@@ -25,7 +25,7 @@ func TestStack(t *testing.T) {
 		want = 4
 
 		if got != want {
-			t.Errorf("Push(%v, %v, %v), size %v want % v", 3, 2, 9, got, want)
+			t.Errorf("Push(%v, %v, %v), size %v want %v", 3, 2, 9, got, want)
 		}
 	})
 
@@ -39,18 +39,18 @@ func TestStack(t *testing.T) {
 		want := 23
 
 		if got != want {
-			t.Errorf("Pop() = %v, want % v", got, want)
+			t.Errorf("Pop() = %v, want %v", got, want)
 		}
 
 		got = s.Size
 		want = 1
 
 		if got != want {
-			t.Errorf("Pop() = %v, want % v", got, want)
+			t.Errorf("Pop() = %v, want %v", got, want)
 		}
 	})
 
-	t.Run("peek element at the top of stac", func(t *testing.T) {
+	t.Run("peek element at the top of stack", func(t *testing.T) {
 		defer s.Clear() // clean up stack
 
 		s.Push(65)
@@ -60,15 +60,31 @@ func TestStack(t *testing.T) {
 		want := 14
 
 		if got != want {
-			t.Errorf("Pop() = %v, want % v", got, want)
+			t.Errorf("Pop() = %v, want %v", got, want)
 		}
 
 		got = s.Size
 		want = 2
 
 		if got != want {
-			t.Errorf("Pop() = %v, want % v", got, want)
+			t.Errorf("Pop() = %v, want %v", got, want)
 		}
 	})
 
+	t.Run("exchange first two items of the stack ", func(t *testing.T) {
+		defer s.Clear() // clean up stack
+
+		s.Push(97)
+		s.Push(98)
+		s.Push(99)
+
+		s.Swap()
+
+		got := s.Peek()
+		want := 98
+
+		if got != want {
+			t.Errorf("Pop() = %v, want %v", got, want)
+		}
+	})
 }
