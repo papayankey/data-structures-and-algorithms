@@ -32,7 +32,7 @@ func (s *Stack) Pop() int {
 }
 
 // Peek returns element at the top of stack,
-// but does not remove elemtn from stack.
+// but does not remove element from stack.
 func (s *Stack) Peek() int {
 	return *s.Data[s.Size-1]
 }
