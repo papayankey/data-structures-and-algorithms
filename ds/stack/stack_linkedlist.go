@@ -37,7 +37,13 @@ func (s *stackLinkedList) Push(items ...string) {
 // Pop removes element from the stack. The stack size
 // is reduced by 1 every time this method is invoked
 func (s *stackLinkedList) Pop() *node {
-	panic("To be implemented")
+	if s.Top == nil {
+		return nil
+	}
+	rem := s.Top
+	s.Top = s.Top.Next
+	s.Size -= 1
+	return rem
 }
 
 // Peek return the element at the top of the stack,
