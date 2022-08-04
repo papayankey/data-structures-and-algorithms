@@ -25,4 +25,15 @@ func TestStackLinkedList(t *testing.T) {
 			t.Errorf("Push(%v, %v); got %v, want %v", "ghana", "nigeria", got, want)
 		}
 	})
+
+	t.Run("removes element from stack", func(t *testing.T) {
+		s.Push("congo", "benin")
+
+		got := (*s.Pop()).Data
+		want := "benin"
+
+		if got != want {
+			t.Errorf("Pop() = %v, want %v", got, want)
+		}
+	})
 }
