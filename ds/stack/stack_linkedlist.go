@@ -54,6 +54,7 @@ func (s *stackLinkedList) Peek() *node {
 
 // Clear removes all elements from the stack.
 // Stack size is reset to zero
-func (s *stackLinkedList) Clear() *node {
-	panic("To be implemented")
+func (s *stackLinkedList) Clear() {
+	s.Top = nil
+	s.Size = 0
 }
