@@ -45,4 +45,23 @@ func TestStackLinkedList(t *testing.T) {
 			t.Errorf("Pop() = %v, want %v", got, want)
 		}
 	})
+
+	t.Run("peek returns element at top but does not remove from stack", func(t *testing.T) {
+		defer s.Clear()
+		s.Push("pineapple", "pawpaw", "orange")
+
+		got := s.Peek()
+		want := "orange"
+
+		if got != want {
+			t.Errorf("Peek() = %v, want %v", got, want)
+		}
+
+		got = strconv.Itoa(s.Size)
+		want = "3"
+
+		if got != want {
+			t.Errorf("Peek() = %v, want %v", got, want)
+		}
+	})
 }

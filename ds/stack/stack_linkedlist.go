@@ -48,8 +48,8 @@ func (s *stackLinkedList) Pop() *node {
 
 // Peek return the element at the top of the stack,
 // but does not remove it from the stack
-func (s *stackLinkedList) Peek() *node {
-	panic("To be implemented")
+func (s *stackLinkedList) Peek() string {
+	return s.Top.Data
 }
 
 // Clear removes all elements from the stack.
