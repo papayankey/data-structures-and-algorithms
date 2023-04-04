@@ -1,7 +1,6 @@
 package stack
 
 // node represents element of linked list
-// data structure used as container for stack
 type node struct {
 	Data string
 	Next *node
