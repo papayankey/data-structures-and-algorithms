@@ -1,3 +1,3 @@
-module github.com/papayankey/ds-and-algo
+module github.com/papayankey/go-ds
 
 go 1.18

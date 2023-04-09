@@ -1,4 +1,4 @@
-package ds
+package linkedlist
 
 // node represents an element of the linked list.
 type Node[E comparable] struct {
@@ -12,17 +12,6 @@ type Linkedlist[E comparable] struct {
 	Tail *Node[E]
 	Len  int
 }
-
-// func (l *Linkedlist[E]) String() string {
-// 	out := ""
-// 	curr := l.Head
-// 	for i := 0; i < l.Len; i++ {
-// 		out += curr.Data + " -> "
-// 		curr = curr.Next
-// 	}
-// 	out += "nil"
-// 	return out
-// }
 
 // NewLinkedList constructs an empty linked list
 func NewList[E comparable]() *Linkedlist[E] {
