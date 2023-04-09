@@ -8,14 +8,14 @@ As my personal note and reference, the following data structures with their<br>
 implementation and / or operations shall be covered;
 
 - Linked List
-  - Singly
+  - Singly ✅
   - Doubly
   - Circular
 - Stack
-  - Array Stack
-  - LinkedList Stack
+  - Array Stack ✅
+  - LinkedList Stack ✅
 - Queue
-  - Array Queue
+  - Array Queue ✅
   - Linked List Queue
   - Circular Queue
   - Priority Queue
