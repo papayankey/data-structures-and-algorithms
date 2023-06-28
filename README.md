@@ -5,27 +5,28 @@ the functions or operations that can be applied to the data.<br>
 [wikipedia](https://en.wikipedia.org/wiki/Data_Structure)
 
 As my personal note and reference, the following data structures with their<br>
-implementation and / or operations shall be covered;
+implementation and operations shall be covered for my future self or anyone who<br>
+might find this useful.<br>
+
+Implementations shall be refactored as and when I learn and gain more insights<br>
+into the go programming language.
 
 - Linked List
   - Singly ✅
   - Doubly
   - Circular
 - Stack
-  - Array Stack ✅
-  - LinkedList Stack ✅
+  - Using Array slice ✅
+  - Using Linked List ✅
 - Queue
-  - Array Queue ✅
-  - Linked List Queue
-  - Circular Queue
-  - Priority Queue
+  - Using slicee ✅
+  - Using Linked List
+  - Circular
+  - Priority ✅
   - Double Ended Queue (Deque)
 - Hash Table
 - Heap
-  - General Heap
-  - Fibonacci Heap
 - Tree
-  - General Tree
   - Binary Tree
   - Binary Search Tree
   - AVL Tree
@@ -34,5 +35,3 @@ implementation and / or operations shall be covered;
   - Red Black Tree
   - Trie
 - Graph
-  - Directed Graph
-  - Undirected Graph
