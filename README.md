@@ -9,17 +9,17 @@ implementation and operations shall be covered for my future self or anyone who 
 Implementations shall be refactored as and when I learn and gain more insights into the go programming language.
 
 - LinkedList
-  - Single ✅
+  - [Single](https://github.com/papayankey/go-ds/blob/main/linkedlist/singly_linkedlist.go) ✅
   - Double
   - Circular
 - Stack
   - [With Slice](https://github.com/papayankey/go-ds/blob/main/stack/stack_list.go) ✅
   - [With LinkedList](https://github.com/papayankey/go-ds/blob/main/stack/stack_linkedlist.go) ✅
 - Queue
-  - With Slice ✅
+  - [With Slice](https://github.com/papayankey/go-ds/blob/main/queue/queue_list.go) ✅
   - With LinkedList
   - Circular
-  - Priority ✅
+  - [With Priority](https://github.com/papayankey/go-ds/blob/main/queue/priority_queue.go) ✅
   - Double Ended Queue (Deque)
 - Hash Table
 - Heap
