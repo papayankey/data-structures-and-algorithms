@@ -3,32 +3,26 @@ package queue
 import "fmt"
 
 type priorityQueue struct {
-	data      []int
-	size      int
-	isMaximum bool
+	data        []int
+	size        int
+	maxPriority bool
 }
 
-// NewPriorityQueue constructs an instance priority queue
+// NewPriorityQueue constructs an instance of priority queue
 func NewPriorityQueue(maxPriority bool) *priorityQueue {
 	return &priorityQueue{
-		data:      []int{},
-		size:      0,
-		isMaximum: maxPriority,
+		data:        []int{},
+		size:        0,
+		maxPriority: maxPriority,
 	}
 }
 
 // Enqueue appends item to end of priority queue
 func (pq *priorityQueue) Enqueue(value int) {
 	pq.data = append(pq.data, value)
+	index := len(pq.data) - 1
 
-	if !isEmpty(pq) {
-		index := len(pq.data) - 1
-		if pq.isMaximum {
-			maxHeapifyUp(pq, index)
-		} else {
-			minHeapifyUp(pq, index)
-		}
-	}
+	heapifyUp(pq, index, pq.maxPriority)
 
 	pq.size += 1
 }
@@ -40,68 +34,60 @@ func (pq *priorityQueue) Dequeue() int {
 	pq.data = pq.data[:len(pq.data)-1]
 	pq.size -= 1
 
-	if pq.isMaximum {
-		minHeapifyDown(pq, 0)
-	} else {
-		maxHeapifyDown(pq, 0)
-	}
+	heapifyDown(pq, 0, pq.maxPriority)
 
 	return item
 }
 
-func minHeapifyDown(pq *priorityQueue, index int) {
-	for index < pq.size {
-		left := left(index)
-		right := right(index)
-		var largest int
+func (pq *priorityQueue) String() string {
+	return fmt.Sprintf("%v", pq.data)
+}
 
-		if right >= pq.size || pq.data[left] > pq.data[right] {
-			largest = left
-		} else {
-			largest = right
-		}
-
-		if largest < pq.size && pq.data[largest] > pq.data[index] {
-			swap(pq, largest, index)
-			index = largest
-		} else {
+func heapifyDown(pq *priorityQueue, index int, maxPriority bool) {
+	for {
+		if index >= pq.size {
 			break
 		}
-	}
-}
 
-func maxHeapifyDown(pq *priorityQueue, index int) {
-	for index < pq.size {
 		left := left(index)
 		right := right(index)
-		var smallest int
+		current := left
 
-		if right >= pq.size || pq.data[left] < pq.data[right] {
-			smallest = left
-		} else {
-			smallest = right
+		if right < pq.size {
+			if maxPriority && pq.data[right] > pq.data[left] {
+				current = right
+			} else if !maxPriority && pq.data[right] < pq.data[left] {
+				current = right
+			}
 		}
 
-		if smallest < pq.size && pq.data[smallest] < pq.data[index] {
-			swap(pq, smallest, index)
-			index = smallest
-		} else {
+		if current >= pq.size {
 			break
 		}
+
+		if maxPriority && !(pq.data[current] > pq.data[index]) {
+			break
+		} else if !maxPriority && !(pq.data[current] < pq.data[index]) {
+			break
+		}
+
+		swap(pq, current, index)
+		index = current
 	}
 }
 
-func minHeapifyUp(pq *priorityQueue, index int) {
-	for pq.data[index] < pq.data[parent(index)] {
-		swap(pq, parent(index), index)
-		index = parent(index)
-	}
-}
+func heapifyUp(pq *priorityQueue, index int, maxPriority bool) {
+	for {
+		parent := parent(index)
 
-func maxHeapifyUp(pq *priorityQueue, index int) {
-	for pq.data[index] > pq.data[parent(index)] {
-		swap(pq, parent(index), index)
-		index = parent(index)
+		if maxPriority && !(pq.data[index] > pq.data[parent]) {
+			break
+		} else if !maxPriority && !(pq.data[index] < pq.data[parent]) {
+			break
+		}
+
+		swap(pq, parent, index)
+		index = parent
 	}
 }
 
@@ -119,12 +105,4 @@ func left(index int) int {
 
 func right(index int) int {
 	return 2*index + 2
-}
-
-func isEmpty(pq *priorityQueue) bool {
-	return pq.size == 0
-}
-
-func (pq *priorityQueue) String() string {
-	return fmt.Sprintf("%v", pq.data)
 }
